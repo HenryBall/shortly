@@ -1,0 +1,51 @@
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+button:hover {
+  cursor: pointer;
+  filter: brightness(90%);
+}
+
+h1 {
+	color: white;
+	font-family: Arial;
+}
+
+.center {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	flex-direction: column;
+}
+
+#inputContainer {
+	width: 75%;
+	height: 70px;
+	display: flex;
+}
+
+input {
+	width: 85%;
+	font-size: 16px;
+	padding-left: 20px;
+	border: none;
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+
+#shortenBtn {
+	width: 15%;
+	font-size: 16px;
+	border: none;
+	color: white;
+	background-color: #ef4f15;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
