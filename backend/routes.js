@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const validUrl = require("valid-url");
-const UrlShorten = mongoose.model("url");
+const urlModel = mongoose.model("url");
 const shortid = require("shortid");
 const errorUrl='http://localhost/error';
 
@@ -8,7 +8,7 @@ module.exports = app => {
 
   app.get("/api/item/:code", async (req, res) => {
     const urlCode = req.params.code;
-    const item = await UrlShorten.findOne({ urlCode: urlCode });
+    const item = await urlModel.findOne({ urlCode: urlCode });
     if (item) {
       return res.redirect(item.url);
     } else {
@@ -29,13 +29,13 @@ module.exports = app => {
     if (validUrl.isUri(url)) {
       try {
         // check if original url has already been shortened
-        const item = await UrlShorten.findOne({ url: url });
+        const item = await urlModel.findOne({ url: url });
         if (item) {
           res.status(200).json(item);
         } else {
           // attach unique code to the base url
           shortUrl = baseUrl + "/" + urlCode;
-          const item = new UrlShorten({
+          const item = new urlModel({
             url,
             shortUrl,
             urlCode,
@@ -51,7 +51,8 @@ module.exports = app => {
     } else {
       return res.status(400).json("Invalid Url");
     }
-  });                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+  }); 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 };
 
 

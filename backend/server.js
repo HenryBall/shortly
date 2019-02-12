@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
-const mongoURI = "mongodb://localhost/urlshrink";
+const mongoURI = "mongodb://localhost/shortly";
 
 const connectOptions = { 
   keepAlive: true, 
