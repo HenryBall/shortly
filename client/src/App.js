@@ -28,6 +28,7 @@ class App extends Component {
       baseUrl: baseUrl
     }).then( res => {
       const shortUrl = String(res.data.shortUrl);
+      console.log(res);
       this.setState({url: shortUrl});
     })
     .catch( err => {
@@ -42,61 +43,29 @@ class App extends Component {
     return protocol + '//' + host;
   }
 
-/*
-  getDataFromDb = () => {
-    fetch("http://localhost:3001/api/getData")
-      .then(data => data.json())
-      .then(res => this.setState({ data: res.data }));
-  };
-
-  deleteFromDB = idTodelete => {
-    let objIdToDelete = null;
-    this.state.data.forEach(dat => {
-      if (dat.id === idTodelete) {
-        objIdToDelete = dat._id;
-      }
-    });
-
-    axios.delete("http://localhost:3001/api/deleteData", {
-      data: {
-        id: objIdToDelete
-      }
-    });
-  };
-
-  updateDB = (idToUpdate, updateToApply) => {
-    let objIdToUpdate = null;
-    this.state.data.forEach(dat => {
-      if (dat.id === idToUpdate) {
-        objIdToUpdate = dat._id;
-      }
-    });
-
-    axios.post("http://localhost:3001/api/updateData", {
-      id: objIdToUpdate,
-      update: { message: updateToApply }
-    });
-  };
-*/
-
   render() {
     return (
-        <div className="center">
-          <h1>Get more out of your links. </h1>
-          <div id="inputContainer">
-            <input
-              type="text"
-              value={this.state.url}
-              onChange={this.handleInputChange.bind(this)}
-              placeholder="Paste a link to shorten it"
-            />
-            <button
-              id="shortenBtn"
-              onClick={() => this.shortenUrl()}>
-              Shorten
-            </button>
+        <div className="fill">
+          <div className="logo">
+            <div id="logo">Minly</div>
           </div>
-        </div>
+          <div className="center">
+            <div id="tag-line">Shorten, Simplify, <span id="tag-line-color">Streamline</span>.</div>
+            <div id="inputContainer">
+              <input
+                type="text"
+                value={this.state.url}
+                onChange={this.handleInputChange.bind(this)}
+                placeholder="Paste a link to shorten it"
+              />
+              <button
+                id="shortenBtn"
+                onClick={() => this.shortenUrl()}>
+                Shorten
+              </button>
+            </div>
+          </div>
+      </div>
     );
   }
 }
