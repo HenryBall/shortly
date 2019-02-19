@@ -23,7 +23,7 @@ class App extends Component {
   shortenUrl = () => {
     const url = this.state.url;
     const baseUrl = "http://localhost"
-    axios.post("http://localhost:3001/shorten", {
+    axios.post("http://localhost:8080/shorten", {
       url: url,
       baseUrl: baseUrl
     }).then( res => {

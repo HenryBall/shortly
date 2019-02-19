@@ -6,7 +6,7 @@ const path = require("path");
 
 const app = express();
 
-const mongoURI = "mongodb://localhost/shortly";
+const mongoURI = "mongodb://localhost/zipurl";
 
 const connectOptions = { 
   keepAlive: true, 
@@ -45,5 +45,5 @@ const Data = require("./data");
 require("./routes")(app);
 
 // launch backend into a port
-const API_PORT = 3001;
+const API_PORT = 8080;
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
