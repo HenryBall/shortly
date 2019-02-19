@@ -2,6 +2,7 @@ const logger = require("morgan");
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const path = require("path");
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use(function(req, res, next) {
 
 // must add bosy parser before adding routes
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, "client/build")))
 
 // import routs and data model
 const Data = require("./data");

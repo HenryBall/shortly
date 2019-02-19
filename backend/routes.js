@@ -8,7 +8,7 @@ const charMap = require('./charMap')
 
 module.exports = app => {
 
-  app.get("/api/item/:code", async (req, res) => {
+  app.get("/redirect/:code", async (req, res) => {
     // get url code from the request
     const urlCode = req.params.code;
     // look for the code in the db
@@ -24,7 +24,7 @@ module.exports = app => {
     }
   });
 
-  app.post("/api/item", async (req, res) => {
+  app.post("/shorten", async (req, res) => {
     const { url, baseUrl } = req.body;
     // if base url is invalid return
     if (!validUrl.isUri(baseUrl)) {
