@@ -45,5 +45,5 @@ const Data = require("./data");
 require("./routes")(app);
 
 // launch backend into a port
-const API_PORT = 5000;
+const API_PORT = process.env.PORT || 5000;
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
