@@ -83,6 +83,8 @@ input {
 	border: none;
 	border-top-left-radius: 5px;
 	border-bottom-left-radius: 5px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
 	font-family: 'Karla', sans-serif;
 	color: #000000;
 }
