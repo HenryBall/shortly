@@ -3,13 +3,26 @@ import axios from "axios";
 import './App.css';
 
 class App extends Component {
-  // initialize our state 
+ 
   state = {
     url: "",
+    baseUrl: "",
+    reqUrl: "",
   };
 
+  setNodeEnv() {
+    if (process.env.NODE_ENV === 'production') {
+      this.setState({baseUrl: "https://zipurl.me"});
+      this.setState({reqUrl: "https://zipurl.me"});
+    } else {
+      this.setState({baseUrl: "http://localhost"});
+      this.setState({reqUrl: "http://localhost:5000"});
+    }
+  }
+
   componentDidMount() {
-    
+    this.setNodeEnv();
+    console.log("we're in " + process.env.NODE_ENV + " mode");
   }
 
   componentWillUnmount() {
@@ -22,8 +35,8 @@ class App extends Component {
 
   shortenUrl = () => {
     const url = this.state.url;
-    const baseUrl = "https://zipurl.me"
-    axios.post("https://zipurl.me/shorten", {
+    const baseUrl = this.state.baseUrl
+    axios.post(this.state.reqUrl + "/shorten", {
       url: url,
       baseUrl: baseUrl
     }).then( res => {
