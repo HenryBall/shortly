@@ -38,7 +38,7 @@ app.use(function(req, res, next) {
 
 // must add bosy parser before adding routes
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, "client/build")))
+app.use(express.static(path.join(__dirname, "../client/build")))
 
 // import routs and data model
 const Data = require("./data");

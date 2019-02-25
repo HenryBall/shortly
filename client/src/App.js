@@ -22,8 +22,8 @@ class App extends Component {
 
   shortenUrl = () => {
     const url = this.state.url;
-    const baseUrl = "http://localhost"
-    axios.post("http://localhost:5000/shorten", {
+    const baseUrl = "https://zipurl.me"
+    axios.post("https://zipurl.me/shorten", {
       url: url,
       baseUrl: baseUrl
     }).then( res => {
@@ -47,7 +47,7 @@ class App extends Component {
     return (
         <div className="fill">
           <div className="logo">
-            <div id="logo">Zipurl</div>
+            <div id="logo">ZipURL</div>
           </div>
           <div className="center">
             <div id="tag-line">Shorten, Simplify, <span id="tag-line-color">Streamline</span>.</div>
