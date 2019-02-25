@@ -41,7 +41,6 @@ class App extends Component {
       baseUrl: baseUrl
     }).then( res => {
       const shortUrl = String(res.data.shortUrl);
-      console.log(res);
       this.setState({url: shortUrl});
     })
     .catch( err => {
@@ -60,7 +59,8 @@ class App extends Component {
     return (
         <div className="fill">
           <div className="logo">
-            <div id="logo">ZipURL</div>
+            <span id="logo-img"></span>
+            <span id="logo">ZipURL</span>
           </div>
           <div className="center">
             <div id="tag-line">Shorten, Simplify, <span id="tag-line-color">Streamline</span>.</div>
