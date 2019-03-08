@@ -1,0 +1,67 @@
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+button:hover {
+ 	cursor: pointer;
+ 	filter: brightness(90%);
+}
+
+.react-link {
+	text-decoration: none;
+}
+
+/* colors */
+
+.yellow-color {
+	color: #f4b504;
+}
+
+.dark-blue-color {
+	color: #182061;
+}
+
+.blue-color {
+	color: #16267d;
+}
+
+.white-color {
+	color: #ffffff;
+}
+
+.dark-grey-color {
+	color: #303030;
+}
+
+.light-grey-color {
+	color: #b4b4b4;
+}
+
+/* background colors */
+
+.yellow-color-back {
+	background-color: #f4b504;
+}
+
+.dark-blue-color-back {
+	background-color: #182061;
+}
+
+.blue-color-back {
+	background-color: #16267d;
+}
+
+.white-color-back {
+	background-color: #ffffff;
+}
+
+.dark-grey-color-back {
+	background-color: #303030;
+}
+
+.light-grey-color-back {
+	background-color: #b4b4b4;
+}

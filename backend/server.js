@@ -16,6 +16,8 @@ const connectOptions = {
 
 // connect to MongoDB
 mongoose.Promise = global.Promise;
+// gets rid of depreciation warning
+mongoose.set('useCreateIndex', true);
 mongoose.connect(mongoURI, connectOptions, (err, db) => {
   if (err) console.log("Error", err);
   console.log("Connected to MongoDB");

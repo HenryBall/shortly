@@ -1,12 +1,16 @@
 const mongoose = require("mongoose");
 const validUrl = require("valid-url");
 const urlModel = mongoose.model("url");
+const userModel = mongoose.model("user");
 const shortid = require("shortid");
+const bcrypt = require("bcrypt");
 const sparkMD5 = require("spark-md5");
 const errorUrl = 'http://localhost/error';
 const charMap = require('./charMap')
 
 module.exports = app => {
+
+
 
   app.get("/redirect/:code", async (req, res) => {
     // get url code from the request
@@ -23,6 +27,8 @@ module.exports = app => {
       return res.redirect(errorUrl);
     }
   });
+
+
 
   app.post("/shorten", async (req, res) => {
     const { url, baseUrl } = req.body;
@@ -69,6 +75,52 @@ module.exports = app => {
     
   });
 
+
+
+  app.post("/sign_up", async (req, res) => {
+    const { username, email, password } = req.body;
+    // perfrom second validation here
+    // make user obj
+    var userData = {
+      username,
+      email,
+      password,
+    }
+    // try to create a new user, if any info is invalid based on the model return an error
+    userModel.create(userData, function (err, user) {
+      if (err) {
+        return res.status(400).json("Unable to sign up");
+      } else {
+        console.log("created user!")
+      }
+    });
+  });
+
+
+
+  app.post("/login", async (req, res) => {
+    const { email, password } = req.body;
+    // look for the user
+    const user = await userModel.findOne({ email: email });
+    // if user exists in db
+    if (user) {
+      // compare unencrypted password with encrypted password
+      bcrypt.compare(password, user.password, function (err, result) {
+        if (result === true) {
+          // if they match we log the user in
+          console.log(user.username)
+        } else {
+          // otherwise return an error
+          return res.status(400).json("Unable to login");
+        }
+      })
+    } else {
+      return res.status(400).json("Unable to login");
+    }
+  });
+
+
+
   function makeUrlObj(url, baseUrl) {
     const updatedAt = new Date();
     // generate unique url code
@@ -80,10 +132,12 @@ module.exports = app => {
           url,
           shortUrl,
           urlCode,
-          updatedAt
+          updatedAt,
     });
     return item;
   }
+
+
 
   /* Generates unique url code using the md5 hash function
   -- chars used are a-z, A-Z, 0-9, -, and _
@@ -109,5 +163,7 @@ module.exports = app => {
     }
     return urlCode;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
   }
+
+  
 
 };
