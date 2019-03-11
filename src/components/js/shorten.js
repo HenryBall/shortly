@@ -11,6 +11,7 @@ class Shorten extends Component {
     reqUrl: '',
   };
 
+  // MOVE SOMEWHERE GLOBALLY!!!!!!!!!!!
 	setNodeEnv() {
     if (process.env.NODE_ENV === 'production') {
     	this.setState({baseUrl: 'https://zipurl.me'});
@@ -39,6 +40,8 @@ class Shorten extends Component {
     }).then( res => {
       	const shortUrl = String(res.data.shortUrl);
       	this.setState({url: shortUrl});
+        console.log("loll");
+        console.log(this.state.url);
     })
     .catch( err => {
       	console.log(err.response.data);
@@ -52,6 +55,7 @@ class Shorten extends Component {
     			<div id='inputContainer'>
         			<input
                   id='shorten-input'
+                  className='dark-grey-color'
             			type='text'
             			value={this.state.url}
             			onChange={this.handleInputChange.bind(this)}

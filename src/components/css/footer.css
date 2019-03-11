@@ -8,7 +8,7 @@
 	flex-direction: column;
 }
 
-#footer-top {
+#squeeze {
 	width: 60%;
 	display: flex;
 	flex-direction: column;
@@ -16,13 +16,14 @@
 }
 
 #title {
-	font-size: 40px;
-	font-family: 'Karla', sans-serif;
+	font-size: 36px;
+	font-family: 'Lato', sans-serif;
 	text-align: center;
+	font-weight: lighter;
 }
 
 #sub-text {
-	margin-top: 10px;
+	margin-top: 20px;
 	font-size: 20px;
 	font-weight: lighter;
 	font-family: 'Lato', sans-serif;
@@ -35,8 +36,21 @@
 	width: 300px;
 	border: none;
 	border-radius: 3px;
-	font-family: 'Karla', sans-serif;
+	font-family: 'Lato', sans-serif;
 	font-size: 16px;
+	margin-top: 30px;
+}
 
+#link-count {
+	margin-top: 100px;
+	font-size: 30px;
+	font-family: 'Lato', sans-serif;
+	text-align: center;
+}
+
+#link-count-text {
 	margin-top: 20px;
+	font-size: 24px;
+	font-family: 'Lato', sans-serif;
+	text-align: center;
 }

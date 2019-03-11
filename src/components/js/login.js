@@ -78,7 +78,7 @@ class Login extends Component {
         					onClick={() => this.handleLogin()}>
         					sign in
         				</button>
-        				<div id='signin-footer'>Don't have an account?
+        				<div id='signin-footer' className='dark-grey-color'>Don't have an account?
         					<Link 
         						to='/sign_up'
         						className='react-link yellow-color'

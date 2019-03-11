@@ -120,6 +120,18 @@ module.exports = app => {
   });
 
 
+  app.post("/num_links", async (req, res) => {
+    // get url code from the request
+    urlModel.countDocuments({}, function(err, count){
+      if (count) {
+        return res.status(200).send(count.toString());
+      } else {
+        return res.status(400).json("Unable to get count");
+      }
+    })
+  });
+
+
 
   function makeUrlObj(url, baseUrl) {
     const updatedAt = new Date();

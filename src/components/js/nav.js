@@ -1,20 +1,22 @@
+// npm imports
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+// style imports
 import '../css/nav.css'
 
+// fixed height nav bar with flexible width
 class Nav extends Component {
-
 	render() {
 		return (
-			<div className='nav'>
-            	<div id='logo' className='white-color'>ZipURL</div>
+			<div id='nav'>
+            	<div id='logo' className='dark-blue-color'>ZipURL</div>
                 <div id="links">
             	   <button className='nav-btn'>
-                        <Link to='/login' className='react-link white-color'>LOGIN</Link>
+                        <Link to='/login' id='login-btn' className='react-link dark-blue-color'>LOGIN</Link>
         	       </button>
                     <button className='nav-btn'>
-                        <Link to='/sign_up' className='react-link white-color'>SIGN UP</Link>
+                        <Link to='/sign_up' className='react-link dark-blue-color'>SIGN UP</Link>
                     </button>
                 </div>
     		</div>

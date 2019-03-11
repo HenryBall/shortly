@@ -18,10 +18,11 @@ class SignUp extends Component {
   		this.handleInputChange = this.handleInputChange.bind(this);
 	}
 
+  // MOVE SOMEWHERE GLOBALLY!!!!!!!!!!
 	componentDidMount() {
-    	this.setNodeEnv();
-    	console.log("we're in " + process.env.NODE_ENV + " mode");
-  	}
+    this.setNodeEnv();
+    console.log("we're in " + process.env.NODE_ENV + " mode");
+  }
 
 	setNodeEnv() {
     	if (process.env.NODE_ENV === 'production') {
@@ -29,7 +30,7 @@ class SignUp extends Component {
     	} else {
       		this.setState({apiUrl: 'http://localhost:5000'});
     	}
-  	}
+  }
 
 	validateEmail(email) {
 		// https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
@@ -121,11 +122,10 @@ class SignUp extends Component {
         			onClick={() => this.handleSignUp()}>
         			sign up
         		</button>
-        		<div id='signin-footer'>Already have an account?
+        		<div id='signin-footer' className='dark-grey-color'>Already have an account?
         			<Link 
         				to='/login'
-        				className='react-link yellow-color'
-        			  > Sign In
+        				className='react-link yellow-color'> Sign In
         			</Link>
         		</div>
 					</div>
