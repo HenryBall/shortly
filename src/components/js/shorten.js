@@ -24,7 +24,7 @@ class Shorten extends Component {
 
   componentDidMount() {
     this.setNodeEnv();
-    console.log("we're in " + process.env.NODE_ENV + " mode");
+    console.log("we're in " + process.env.NODE_ENV + " mode in the shorten component");
   }
 
   handleInputChange(event) {
@@ -40,11 +40,13 @@ class Shorten extends Component {
     }).then( res => {
       	const shortUrl = String(res.data.shortUrl);
       	this.setState({url: shortUrl});
-        console.log("loll");
-        console.log(this.state.url);
+
+        // Add a field to urlModel which holds total number of links so that when shorten is called it also gets the new number of links 
+        this.props.updateNumLinks();
     })
     .catch( err => {
-      	console.log(err.response.data);
+        console.log('poo!')
+      	console.log(err.response);
     });
   }
 

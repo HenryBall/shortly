@@ -1,49 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
 import '../css/footer.css'
 
 class Footer extends Component {
-
-	state = {
-		numLinks: '',
-		apiUrl: '',
-	};
-
-	handleInputChange(event) {
-    	this.setState({numLinks: event.target.value});
-  	}
-
-
-	// MOVE SOMEWHERE GLOBALLY!!!!!!!!!!!
-	componentDidMount() {
-    	this.setNodeEnv();
-    	this.getNumLinks();
-    	console.log("we're in " + process.env.NODE_ENV + " mode");
-  	}
-
-	setNodeEnv() {
-    	if (process.env.NODE_ENV === 'production') {
-    		this.setState({apiUrl: 'https://zipurl.me'});
-    	} else {
-      		this.setState({apiUrl: 'http://localhost:5000'});
-    	}
-  	}
-
-  	getNumLinks() {
-  		console.log("hahahahahah")
-  		axios.post(this.state.apiUrl + '/num_links', {
-
-    	}).then( res => {
-    		const count = String(res.data);
-      		this.setState({numLinks: count});
-    	})
-    	.catch( err => {
-      		console.log(err.response.data);
-    	});
-  	}
-
 	render() {
 		return (
 			<div className='footer'>
@@ -57,7 +17,7 @@ class Footer extends Component {
       					<div 
       						id='link-count'
       						name='numLinks'
-							>{this.state.numLinks}</div>
+							>{this.props.numLinks}</div>
       					<div id='link-count-text'>LINKS SHORTENED AND COUNTING</div>
       				</div>
       			</div>
