@@ -7,25 +7,28 @@ const bcrypt = require("bcrypt");
 const sparkMD5 = require("spark-md5");
 const errorUrl = 'http://localhost/error';
 const charMap = require('./charMap')
+const _ = require('underscore-node');
 
 module.exports = app => {
 
-
+  const apiUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_URL : process.env.REACT_APP_LOCAL_URL;
+  const server = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_SERVER : process.env.REACT_APP_LOCAL_SERVER;
 
   app.get("/redirect/:code", async (req, res) => {
     // get url code from the request
     const urlCode = req.params.code;
     // look for the code in the db
-    const item = await urlModel.findOne({ urlCode: urlCode });
-    if (item) {
-      // redirect to the code's original url
-      console.log("found the url code");
-      return res.redirect(item.url);
-    } else {
-      // the code does not exist in the db so redirect to an error
-      console.log("unable to find url code");
-      return res.redirect(errorUrl);
-    }
+    await urlModel.findOne({ urlCode: urlCode }, function (err, doc) {
+      if (err) {
+        console.log("unable to find url code");
+        return res.redirect(errorUrl);
+      } else {
+        console.log("found the url code");
+        doc.clicks = doc.clicks + 1;
+        doc.save();
+        return res.redirect(doc.url);
+      }
+    });
   });
 
 
@@ -109,8 +112,10 @@ module.exports = app => {
         if (result === true) {
           // if they match we log the user in
           console.log(user.username)
+          return res.redirect(apiUrl + "/user");
         } else {
           // otherwise return an error
+          console.log(user)
           return res.status(400).json("Unable to login");
         }
       })
@@ -120,13 +125,32 @@ module.exports = app => {
   });
 
 
+
+  app.post("/num_redirects", async (req, res) => {
+    // get url code from the request
+    urlModel.find({}, function(err, results){
+      if (err) {
+        return res.status(400).json("Unable to get count");
+      } else {
+        let sum = _.reduce(results, function(memo, reading){ return memo + reading.clicks; }, 0);
+        return res.status(200).send(sum.toString());
+      }
+    })
+  });
+
+
+
   app.post("/num_links", async (req, res) => {
     // get url code from the request
     urlModel.countDocuments({}, function(err, count){
-      if (count) {
-        return res.status(200).send(count.toString());
-      } else {
+      if (err) {
         return res.status(400).json("Unable to get count");
+      } else {
+        if (count) {
+          return res.status(200).send(count.toString());
+        } else {
+          return res.status(200).send("0");
+        }
       }
     })
   });
@@ -140,11 +164,13 @@ module.exports = app => {
     // append url code to the base url
     shortUrl = baseUrl + "/" + urlCode;
     // create a new url obj based on our model in data.js
+    clicks = 0;
     const item = new urlModel({
           url,
           shortUrl,
           urlCode,
           updatedAt,
+          clicks,
     });
     return item;
   }

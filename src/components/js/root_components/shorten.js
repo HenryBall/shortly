@@ -1,51 +1,40 @@
+// npm imports
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import '../css/shorten.css'
+// style imports
+import '../../css/root_components/shorten.css'
 
+// require dotenv package for managing env variables
+require('dotenv').config();
+
+// shorten component
 class Shorten extends Component {
 
 	state = {
     url: '',
-    baseUrl: '',
-    reqUrl: '',
   };
-
-  // MOVE SOMEWHERE GLOBALLY!!!!!!!!!!!
-	setNodeEnv() {
-    if (process.env.NODE_ENV === 'production') {
-    	this.setState({baseUrl: 'https://zipurl.me'});
-      this.setState({reqUrl: 'https://zipurl.me'});
-    } else {
-      this.setState({baseUrl: 'http://localhost'});
-      this.setState({reqUrl: 'http://localhost:5000'});
-    }
-  }
-
-  componentDidMount() {
-    this.setNodeEnv();
-    console.log("we're in " + process.env.NODE_ENV + " mode in the shorten component");
-  }
 
   handleInputChange(event) {
     this.setState({url: event.target.value});
   }
 
+  componentDidMount() {
+    console.log("we're in " + process.env.NODE_ENV + " mode in the shorten component");
+  }
+
   shortenUrl = () => {
-    const url = this.state.url;
-    const baseUrl = this.state.baseUrl
-    axios.post(this.state.reqUrl + '/shorten', {
-      	url: url,
-      	baseUrl: baseUrl
+    const apiUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_URL : process.env.REACT_APP_LOCAL_URL
+    const server = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_SERVER : process.env.REACT_APP_LOCAL_SERVER
+    axios.post(apiUrl + server + '/shorten', {
+      	url: this.state.url,
+      	baseUrl: apiUrl
     }).then( res => {
       	const shortUrl = String(res.data.shortUrl);
-      	this.setState({url: shortUrl});
-
-        // Add a field to urlModel which holds total number of links so that when shorten is called it also gets the new number of links 
+      	this.setState({url: shortUrl}); 
         this.props.updateNumLinks();
     })
     .catch( err => {
-        console.log('poo!')
       	console.log(err.response);
     });
   }

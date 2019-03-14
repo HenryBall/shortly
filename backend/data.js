@@ -9,6 +9,7 @@ const urlSchema = new Schema({
   shortUrl: String,
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
+  clicks: Number,
 });
 
 const userSchema = new mongoose.Schema({

@@ -12,14 +12,15 @@
 	height: 50px;
 	background-repeat: no-repeat;
     background-size: cover;
-	background-image: url("../assets/logoPage.png");
+	background-image: url("");
 	margin-left: 20px;
 }
 
 #logo {
 	font-size: 30px;
-	font-family: 'Courgette', sans-serif;
+	font-family: 'Lato', sans-serif;
 	margin-left: 8%;
+	font-weight: lighter;
 }
 
 #links {
