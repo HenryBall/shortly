@@ -1,3 +1,3 @@
 # zipurl
 
-zipurl is a link shortening service
+shorter links
