@@ -2,7 +2,6 @@
 const mongoose = require("mongoose");
 const validUrl = require("valid-url");
 const shortid = require("shortid");
-const bcrypt = require("bcrypt");
 const sparkMD5 = require("spark-md5");
 const _ = require('underscore-node');
 const passport = require('passport');
