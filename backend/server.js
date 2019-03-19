@@ -41,7 +41,7 @@ app.use(function(req, res, next) {
 
 // must add bosy parser before adding routes
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, "../client/build")))
+app.use(express.static(path.join(__dirname, "../build")))
 app.use(session({ secret: 'secret', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 
 // import routs and data model
