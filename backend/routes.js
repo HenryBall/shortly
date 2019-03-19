@@ -1,16 +1,25 @@
+// npm imports
 const mongoose = require("mongoose");
 const validUrl = require("valid-url");
-const urlModel = mongoose.model("url");
-const userModel = mongoose.model("user");
 const shortid = require("shortid");
 const bcrypt = require("bcrypt");
 const sparkMD5 = require("spark-md5");
-const errorUrl = 'http://localhost/error';
-const charMap = require('./charMap')
 const _ = require('underscore-node');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
+
+// helper files
+const auth = require('./auth');
+const charMap = require('./charMap');
+const errorUrl = 'http://localhost/error';
+
+// mongoose models
+const urlModel = mongoose.model("url");
+const userModel = mongoose.model("user");
 
 module.exports = app => {
 
+  // api and server variables
   const apiUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_URL : process.env.REACT_APP_LOCAL_URL;
   const server = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_SERVER : process.env.REACT_APP_LOCAL_SERVER;
 
@@ -23,7 +32,6 @@ module.exports = app => {
         console.log("unable to find url code");
         return res.redirect(errorUrl);
       } else {
-        console.log("found the url code");
         doc.clicks = doc.clicks + 1;
         doc.save();
         return res.redirect(doc.url);
@@ -34,7 +42,7 @@ module.exports = app => {
 
 
   app.post("/shorten", async (req, res) => {
-    const { url, baseUrl } = req.body;
+    const { url, baseUrl, userId } = req.body;
     // if base url is invalid return
     if (!validUrl.isUri(baseUrl)) {
       return res.status(400).json("Invalid Url");
@@ -53,6 +61,7 @@ module.exports = app => {
         // if the code was already generated from the same original url 
         if (alreadyUsedCode.url == urlToSave.url) {
           // return the url obj but do not save it
+          addLinkToUser(userId, alreadyUsedCode._id);
           return res.status(200).json(urlToSave);
         } else {
           // otherwise there was a collision, return an error
@@ -65,6 +74,7 @@ module.exports = app => {
         const urlToCheck = await urlModel.findOne({ urlCode: urlToSave.urlCode });
         if (urlToCheck.url == urlToSave.url) {
           // if the two urls are consistent return
+          addLinkToUser(userId, urlToSave._id);
           return res.status(200).json(urlToSave);
         } else {
           // otherwise the generated code matches a different long url
@@ -75,52 +85,50 @@ module.exports = app => {
       console.log(err);
       return res.status(400).json("Unable to shorten url");
     }
-    
   });
 
 
 
-  app.post("/sign_up", async (req, res) => {
-    const { username, email, password } = req.body;
-    // perfrom second validation here
-    // make user obj
-    var userData = {
-      username,
-      email,
-      password,
-    }
-    // try to create a new user, if any info is invalid based on the model return an error
-    userModel.create(userData, function (err, user) {
-      if (err) {
-        return res.status(400).json("Unable to sign up");
-      } else {
-        console.log("created user!")
+  app.post("/sign_up", async (req, res, next) => {
+    const user = req.body;
+    // TODO: perfrom second validation here
+    // TODO: handle duplicate key exception
+    const curUser = new userModel(user);
+    curUser.setPassword(user.password);
+    return curUser.save()
+    .then(() => res.json({ user: curUser.toAuthJSON() }));
+  });
+
+
+
+  app.post("/login", async (req, res, next) => {
+    const user = req.body;
+    // TODO: perfrom second validation here
+
+    return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
+      if(err) {
+        return res.status(400).json("Unable to login");
       }
-    });
+
+      if(passportUser) {
+        const user = passportUser;
+        user.token = passportUser.generateJWT();
+        return res.json({ user: user.toAuthJSON() });
+      }
+
+      return res.status(400).info;
+    })(req, res, next);
   });
 
 
 
-  app.post("/login", async (req, res) => {
-    const { email, password } = req.body;
-    // look for the user
-    const user = await userModel.findOne({ email: email });
-    // if user exists in db
-    if (user) {
-      // compare unencrypted password with encrypted password
-      bcrypt.compare(password, user.password, function (err, result) {
-        if (result === true) {
-          // if they match we log the user in
-          console.log(user.username)
-          return res.redirect(apiUrl + "/user");
-        } else {
-          // otherwise return an error
-          console.log(user)
-          return res.status(400).json("Unable to login");
-        }
-      })
+  // token verification function
+  app.post("/verify_token", async (req, res, next) => {
+    const authorizedData = verifyToken(req.body.token);
+    if (authorizedData != false) {
+      return res.status(200).json(authorizedData);
     } else {
-      return res.status(400).json("Unable to login");
+      return res.status(400).json("web token expired");
     }
   });
 
@@ -157,14 +165,87 @@ module.exports = app => {
 
 
 
+  app.post("/user_links", async (req, res) => {
+    const { userId } = req.body;
+    // get url code from the request
+    const user = await userModel.findOne({ _id: userId });
+    if (user) {
+      const links = user.links;
+      var linkObjs = [];
+      for (var i = 0; i < links.length; i++) {
+        const link = await urlModel.findOne({ _id: links[i] });
+        if (link) { linkObjs.push(link); }
+      }
+      return res.send(JSON.stringify(linkObjs));
+    } else {
+      console.log("can't find user");
+    }
+  });
+
+
+
+  app.post("/delete_user_link", async (req, res) => {
+    const { userId, linkId } = req.body;
+    // get url code from the request
+    await userModel.findOne({ _id: userId }, async function (err, doc) {
+      if (err) {
+        console.log("unable to find user");
+      } else {
+        const links = doc.links;
+        const filteredLinks = links.filter(link => link != linkId);
+        doc.links = filteredLinks;
+        doc.save();
+        var linkObjs = [];
+        for (var i = 0; i < filteredLinks.length; i++) {
+          const link = await urlModel.findOne({ _id: filteredLinks[i] });
+          if (link) { linkObjs.push(link); }
+        }
+        return res.send(JSON.stringify(linkObjs));
+      }
+    });
+  });
+
+
+
+  async function addLinkToUser(userId, linkId) {
+    console.log(userId);
+    console.log(linkId);
+    if (userId != null) {
+      await userModel.findOne({ _id: userId }, function (err, doc) {
+        if (err) {
+          console.log("Unable to get links");
+        } else {
+          doc.links.push(linkId);
+          doc.save();
+        }
+      });
+    }
+  }
+
+
+
+  function verifyToken(token) {
+    jwt.verify(token, 'secret', (err, authorizedData) => {
+      if(err){
+        //If error send Forbidden (403)
+        return false;
+      } else {
+        //If token is successfully verified, we can send the autorized data
+        return authorizedData;
+      }
+    })
+  }
+
+
+
   function makeUrlObj(url, baseUrl) {
+    clicks = 0;
     const updatedAt = new Date();
     // generate unique url code
     const urlCode = generateUrlCode(url);
     // append url code to the base url
     shortUrl = baseUrl + "/" + urlCode;
     // create a new url obj based on our model in data.js
-    clicks = 0;
     const item = new urlModel({
           url,
           shortUrl,

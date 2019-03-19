@@ -7,18 +7,41 @@ import '../../css/root_components/nav.css'
 
 // fixed height nav bar with flexible width
 class Nav extends Component {
+
+    handleLogout() {
+        this.props.handleLogout();
+    }
+
 	render() {
-		return (
-			<div id='nav'>
-            	<div id='logo' className='dark-blue-color'>ZIP</div>
+        let links;
+        if (this.props.isLoggedIn) {
+            links = (
                 <div id="links">
-            	   <button className='nav-btn'>
+                   <button className='nav-btn'>
+                        <Link to='/' id='login-btn' className='react-link dark-blue-color'
+                            onClick={() => this.handleLogout()}>
+                            LOGOUT
+                        </Link>
+                   </button>
+                </div>
+            )
+        } else {
+            links = (
+                <div id="links">
+                   <button className='nav-btn'>
                         <Link to='/login' id='login-btn' className='react-link dark-blue-color'>LOGIN</Link>
-        	       </button>
+                   </button>
                     <button className='nav-btn'>
                         <Link to='/sign_up' className='react-link dark-blue-color'>SIGN UP</Link>
                     </button>
                 </div>
+            )
+        }
+
+		return (
+			<div id='nav'>
+            	<div id='logo' className='dark-blue-color'>ZIP</div>
+                {links}
     		</div>
 		);
 	}

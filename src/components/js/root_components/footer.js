@@ -32,7 +32,7 @@ class Footer extends Component {
                                                 <Odometer className='count' value={this.props.numRedirects} format="(.ddd),dd"/>
                                           </div>
                                           <div className='analytics-title-text'>TOTAL REDIRECTS</div>
-                                          <div className='analytics-sub-text light-grey-color'>Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+                                          <div className='analytics-sub-text light-grey-color'>Shorter links generate more clicks! Don't miss out on increased site traffic.</div>
                                     </div>
       				</div>
       			</div>

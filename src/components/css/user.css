@@ -1,0 +1,92 @@
+.top {
+	width: 100%;
+	height: 600px;
+	background: linear-gradient(rgba(24, 32, 97, 1), rgba(24, 32, 97, 1)); /*, 
+	url(../assets/background.jpg); */
+  	background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+}
+
+.bottom-fixed {
+	position: absolute; top: 600; left: 600;
+	width: 100%; height: calc(100% - 600px);
+	display: flex;
+	flex-direction: row;
+}
+
+.third {
+	background-color: #fcfcfc;
+ 	width: 33%;
+ 	height: 100%;
+ 	overflow: hidden;
+ 	overflow-y:auto
+}
+
+.two-thirds {
+	padding-top: 50px;
+	padding-left: 50px;
+ 	width: 66%;
+ 	font-family: 'Lato', sans-serif;
+ 	font-weight: lighter;
+ 	overflow: hidden;
+}
+
+#date {
+	font-size: 12px;
+}
+
+@media screen and (max-width: 600px) {
+	.two-thirds {
+		visibility: hidden;
+		width: 0px;
+		padding: 0 0 0 0;
+	}
+	.third {
+		width: 100%;
+	}
+}
+
+#main-link {
+	margin-top: 5px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#short-url {
+	margin-top: 8px;
+}
+
+#clicks {
+	margin-top: 8px;
+	font-size: 12px;
+}
+
+.delete-btn-active {
+	width: 80px;
+	height: 30px;
+	margin-top: 10px;
+	border: 1px solid #182061;
+	color: #182061;
+	border-radius: 3px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	font-size: 12px;
+	transition: background-color linear .2s;
+}
+
+div.delete-btn-active:hover {
+	background-color: #182061;
+	border: none;
+	color: white;
+	transition: background-color linear .2s;
+}
+
+.delete-btn-not-active {
+	visibility: hidden;
+}

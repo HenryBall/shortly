@@ -1,5 +1,6 @@
 const logger = require("morgan");
 const express = require("express");
+const session = require('express-session');
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
@@ -41,10 +42,12 @@ app.use(function(req, res, next) {
 // must add bosy parser before adding routes
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "../client/build")))
+app.use(session({ secret: 'secret', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 
 // import routs and data model
 const Data = require("./data");
 require("./routes")(app);
+require('./passport');
 
 // launch backend into a port
 const API_PORT = process.env.PORT || 5000;

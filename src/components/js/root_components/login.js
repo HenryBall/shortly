@@ -9,6 +9,10 @@ import '../../css/root_components/login.css'
 // require dotenv package for managing env variables
 require('dotenv').config();
 
+// api and server variables
+const apiUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_URL : process.env.REACT_APP_LOCAL_URL;
+const server = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_SERVER : process.env.REACT_APP_LOCAL_SERVER;
+
 class Login extends Component {
 
 	constructor(props) {
@@ -16,6 +20,7 @@ class Login extends Component {
 		this.state = {
     	email: '',
     	password: '',
+      redirect: '',
   	};
   	this.handleInputChange = this.handleInputChange.bind(this);
 	}
@@ -25,16 +30,20 @@ class Login extends Component {
   }
 
   handleLogin() {
-    const apiUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_URL : process.env.REACT_APP_LOCAL_URL;
-    const server = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_SERVER : process.env.REACT_APP_LOCAL_SERVER;
   	axios.post(apiUrl + server + '/login', {
       email: this.state.email,
       password: this.state.password,
     }).then( res => {
-      // handle any post login events
+      const user = res.data.user;
+      if (user) {
+        localStorage.setItem('curUser', JSON.stringify(res.data.user));
+        this.props.handleLogin();
+      } else {
+        console.log('unable to log in');
+      }
     })
     .catch( err => {
-      	console.log(err.response.data);
+      	console.log(err);
     });
   }
 
@@ -48,6 +57,8 @@ class Login extends Component {
   }
 
 	render() {
+    // if the user logs in or is already logged in redirect to the user component
+
 		return (
 			<div id='login-container'>
 				<div id='login-box'>

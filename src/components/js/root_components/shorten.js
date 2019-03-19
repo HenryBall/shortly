@@ -8,6 +8,10 @@ import '../../css/root_components/shorten.css'
 // require dotenv package for managing env variables
 require('dotenv').config();
 
+// api and server variables
+const apiUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_URL : process.env.REACT_APP_LOCAL_URL;
+const server = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_SERVER : process.env.REACT_APP_LOCAL_SERVER;
+
 // shorten component
 class Shorten extends Component {
 
@@ -24,18 +28,20 @@ class Shorten extends Component {
   }
 
   shortenUrl = () => {
-    const apiUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_URL : process.env.REACT_APP_LOCAL_URL
-    const server = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_SERVER : process.env.REACT_APP_LOCAL_SERVER
+    console.log(this.props)
     axios.post(apiUrl + server + '/shorten', {
       	url: this.state.url,
-      	baseUrl: apiUrl
+      	baseUrl: apiUrl,
+        userId: this.props.userId,
     }).then( res => {
+        // get the short url from the request body
       	const shortUrl = String(res.data.shortUrl);
-      	this.setState({url: shortUrl}); 
-        this.props.updateNumLinks();
-    })
-    .catch( err => {
-      	console.log(err.response);
+        // set new url state to update UI with short url
+      	this.setState({url: shortUrl});
+        // get new num of links if in home.js or new num or user links if in user.js 
+        this.props.updateLinks();
+    }).catch( err => {
+      	console.log(err);
     });
   }
 

@@ -9,6 +9,10 @@ import '../../css/root_components/login.css'
 // require dotenv package for managing env variables
 require('dotenv').config();
 
+// api and server variables
+const apiUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_URL : process.env.REACT_APP_LOCAL_URL;
+const server = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_SERVER : process.env.REACT_APP_LOCAL_SERVER;
+
 // sign up component
 class SignUp extends Component {
 
@@ -34,8 +38,6 @@ class SignUp extends Component {
 	}
 
   handleSignUp() {
-    const apiUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_URL : process.env.REACT_APP_LOCAL_URL
-    const server = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_SERVER : process.env.REACT_APP_LOCAL_SERVER
   	console.log(this.state)
   	if (this.state.username === '') {
   		// throw error
@@ -50,11 +52,18 @@ class SignUp extends Component {
       			username: this.state.username,
       			email: this.state.email,
       			password: this.state.password,
+            links: [],
     			}).then( res => {
-            // handle any post sign up events
+            const user = res.data.user;
+            if (user) {
+              localStorage.setItem('curUser', JSON.stringify(res.data.user));
+              this.props.handleLogin();
+            } else {
+              console.log('unable to log in');
+            }
     			})
     			.catch( err => {
-      			console.log(err.response.data);
+      			console.log(err);
     			});
   			} else {
   				// throw error

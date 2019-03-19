@@ -1,6 +1,8 @@
 // /backend/data.js
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+//const bcrypt = require("bcrypt");
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 const Schema = mongoose.Schema;
  
 const urlSchema = new Schema({
@@ -23,23 +25,49 @@ const userSchema = new mongoose.Schema({
     unique: true,
     required: true,
   },
-  password: {
+  hash: {
     type: String,
     required: true,
+  },
+  salt: {
+    type: String,
+    required: true,
+  },
+  links: {
+    type: Array,
   }
 });
 
-// hash user password before saving it
-userSchema.pre('save', function (next) {
-  var user = this;
-  bcrypt.hash(user.password, 10, function (err, hash){
-    if (err) {
-      return next(err);
-    }
-    user.password = hash;
-    next();
-  })
-});
+userSchema.methods.setPassword = function(password) {
+  this.salt = crypto.randomBytes(16).toString('hex');
+  this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
+};
+
+userSchema.methods.validatePassword = function(password) {
+  const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
+  return this.hash === hash;
+};
+
+userSchema.methods.generateJWT = function() {
+  const today = new Date();
+  const expirationDate = new Date(today);
+  expirationDate.setDate(today.getDate() + 60);
+
+  return jwt.sign({
+    email: this.email,
+    id: this._id,
+    //exp: parseInt(expirationDate.getTime() / 1000, 10),
+    exp: Math.floor(Date.now() / 1000) + (60 * 60),
+  }, 'secret');
+};
+
+userSchema.methods.toAuthJSON = function() {
+  return {
+    _id: this._id,
+    email: this.email,
+    token: this.generateJWT(),
+  };
+};
 
 mongoose.model("user", userSchema);
 mongoose.model("url", urlSchema);
