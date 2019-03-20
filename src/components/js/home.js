@@ -48,7 +48,7 @@ class Home extends Component {
   }
 
   getNumLinks = () => {
-    axios.post(url + '/num_links', {
+    axios.post('https://zipurl.me' + '/num_links', {
       // no data to send
     }, {
       // send cancel token in case the component is unmounted
@@ -67,7 +67,7 @@ class Home extends Component {
   }
 
   getNumRedirects = () => {
-    axios.post(url + '/num_redirects', {
+    axios.post('https://zipurl.me' + '/num_redirects', {
       // no data to send
     }, {
       // send cancel token in case the component is unmounted
