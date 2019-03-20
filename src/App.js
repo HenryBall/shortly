@@ -34,13 +34,14 @@ class App extends Component {
     }
 
     verifyToken(user) {
-        axios.post('https://zipurl.me' + '/verify_token', {
+        /*axios.post('https://zipurl.me' + '/verify_token', {
             token: user.token,
         }).then( res => {
             this.setState({isLoggedIn: true});
         }).catch( err => {
             console.log(err);
-        });
+        });*/
+        this.setState({isLoggedIn: true});
     }
 
     renderProps = (Component, props) => {

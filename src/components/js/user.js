@@ -77,7 +77,6 @@ class Home extends Component {
   }
 
   setSelectedLink = (linkObj) => {
-    console.log(linkObj)
     const d =  new Date(linkObj.createdAt).toDateString();
     this.setState({linkId: linkObj._id});
     this.setState({date: 'CREATED ON: ' + d});
@@ -98,7 +97,6 @@ class Home extends Component {
       userId: this.state.userId,
       linkId: this.state.linkId,
     }).then( res => {
-        console.log(res.data);
         this.setState({listItems: res.data});
         this.resetState();
     }).catch( err => {

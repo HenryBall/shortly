@@ -78,6 +78,7 @@
 	cursor: pointer;
 	font-size: 12px;
 	transition: background-color linear .2s;
+	-webkit-backface-visibility: hidden;
 }
 
 div.delete-btn-active:hover {
