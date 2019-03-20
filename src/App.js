@@ -16,6 +16,7 @@ import './App.css';
 // api and server variables
 const apiUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_URL : process.env.REACT_APP_LOCAL_URL;
 const server = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_SERVER : process.env.REACT_APP_LOCAL_SERVER;
+const url = ( server === "" ) ? String(apiUrl) : String(apiUrl) + String(server);
 
 // entire app rendered as one component
 class App extends Component {
@@ -34,7 +35,7 @@ class App extends Component {
     }
 
     verifyToken(user) {
-        axios.post(apiUrl + server + '/verify_token', {
+        axios.post(url + '/verify_token', {
             token: user.token,
         }).then( res => {
             this.setState({isLoggedIn: true});

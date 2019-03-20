@@ -16,6 +16,7 @@ require('dotenv').config();
 // api and server variables
 const apiUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_URL : process.env.REACT_APP_LOCAL_URL;
 const server = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_SERVER : process.env.REACT_APP_LOCAL_SERVER;
+const url = ( server === "" ) ? String(apiUrl) : String(apiUrl) + String(server);
 
 class Home extends Component {
 
@@ -60,7 +61,7 @@ class Home extends Component {
   }
 
   getUserLinks = () => {
-    axios.post(apiUrl + server + '/user_links', {
+    axios.post(url + '/user_links', {
       // send the user's token in the request headers
       headers: {
         'authorization': this.state.userToken,
@@ -87,7 +88,7 @@ class Home extends Component {
   }
 
   handleDelete() {
-    axios.post(apiUrl + server + '/delete_user_link', {
+    axios.post(url + '/delete_user_link', {
       // send the user's token in the request headers
       headers: {
         'authorization': this.state.userToken,

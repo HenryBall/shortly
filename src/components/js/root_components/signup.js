@@ -12,6 +12,7 @@ require('dotenv').config();
 // api and server variables
 const apiUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_URL : process.env.REACT_APP_LOCAL_URL;
 const server = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_SERVER : process.env.REACT_APP_LOCAL_SERVER;
+const url = ( server === "" ) ? String(apiUrl) : String(apiUrl) + String(server);
 
 // sign up component
 class SignUp extends Component {
@@ -48,7 +49,7 @@ class SignUp extends Component {
   			if (this.state.password === this.state.passwordd) {
   				// good to go
   				console.log('valid password')
-  				axios.post(apiUrl + server + '/sign_up', {
+  				axios.post(url + '/sign_up', {
       			username: this.state.username,
       			email: this.state.email,
       			password: this.state.password,

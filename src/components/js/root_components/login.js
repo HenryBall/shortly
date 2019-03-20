@@ -12,6 +12,7 @@ require('dotenv').config();
 // api and server variables
 const apiUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_URL : process.env.REACT_APP_LOCAL_URL;
 const server = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_SERVER : process.env.REACT_APP_LOCAL_SERVER;
+const url = ( server === "" ) ? String(apiUrl) : String(apiUrl) + String(server);
 
 class Login extends Component {
 
@@ -30,7 +31,7 @@ class Login extends Component {
   }
 
   handleLogin() {
-  	axios.post(apiUrl + server + '/login', {
+  	axios.post(url + '/login', {
       email: this.state.email,
       password: this.state.password,
     }).then( res => {
