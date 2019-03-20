@@ -6,6 +6,7 @@ const sparkMD5 = require("spark-md5");
 const _ = require('underscore-node');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+var cors = require('cors');
 
 // helper files
 const auth = require('./auth');
@@ -17,6 +18,8 @@ const urlModel = mongoose.model("url");
 const userModel = mongoose.model("user");
 
 module.exports = app => {
+
+  app.use(cors());
 
   // api and server variables
   const apiUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_URL : process.env.REACT_APP_LOCAL_URL;

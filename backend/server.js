@@ -4,8 +4,10 @@ const session = require('express-session');
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
+var cors = require('cors');
 
 const app = express();
+app.use(cors());
 
 const mongoURI = "mongodb://localhost/zipurl";
 
@@ -48,6 +50,7 @@ app.use(session({ secret: 'secret', cookie: { maxAge: 60000 }, resave: false, sa
 const Data = require("./data");
 require("./routes")(app);
 require('./passport');
+require('./auth');
 
 // launch backend into a port
 const API_PORT = process.env.PORT || 5000;
