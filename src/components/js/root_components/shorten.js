@@ -30,7 +30,7 @@ class Shorten extends Component {
 
   shortenUrl = () => {
     console.log(this.props)
-    axios.post(url + '/shorten', {
+    axios.post('https://zipurl.me' + '/shorten', {
       	url: this.state.url,
       	baseUrl: apiUrl,
         userId: this.props.userId,

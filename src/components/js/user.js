@@ -61,7 +61,7 @@ class Home extends Component {
   }
 
   getUserLinks = () => {
-    axios.post(url + '/user_links', {
+    axios.post('https://zipurl.me' + '/user_links', {
       // send the user's token in the request headers
       headers: {
         'authorization': this.state.userToken,
@@ -88,7 +88,7 @@ class Home extends Component {
   }
 
   handleDelete() {
-    axios.post(url + '/delete_user_link', {
+    axios.post('https://zipurl.me' + '/delete_user_link', {
       // send the user's token in the request headers
       headers: {
         'authorization': this.state.userToken,

@@ -39,7 +39,6 @@ class SignUp extends Component {
 	}
 
   handleSignUp() {
-  	console.log(this.state)
   	if (this.state.username === '') {
   		// throw error
   		console.log('invalid username')
@@ -49,7 +48,7 @@ class SignUp extends Component {
   			if (this.state.password === this.state.passwordd) {
   				// good to go
   				console.log('valid password')
-  				axios.post(url + '/sign_up', {
+  				axios.post('https://zipurl.me' + '/sign_up', {
       			username: this.state.username,
       			email: this.state.email,
       			password: this.state.password,

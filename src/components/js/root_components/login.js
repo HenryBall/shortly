@@ -31,7 +31,7 @@ class Login extends Component {
   }
 
   handleLogin() {
-  	axios.post(url + '/login', {
+  	axios.post('https://zipurl.me' + '/login', {
       email: this.state.email,
       password: this.state.password,
     }).then( res => {
