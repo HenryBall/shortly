@@ -15,17 +15,15 @@ require('dotenv').config();
 
 // api and server variables
 const apiUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_URL : process.env.REACT_APP_LOCAL_URL;
-const server = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_SERVER : process.env.REACT_APP_LOCAL_SERVER;
-const url = ( server === "" ) ? String(apiUrl) : String(apiUrl) + String(server);
 
 // axios cancel token
 const cancelToken = axios.CancelToken;
 const source = cancelToken.source();
 
 class Home extends Component {
+
   // keeps track of mounted state so we don't try to call setState in async functions after the component has benn unmounted
   _isMounted = false;
-
 
   state= {
     numLinks: '',
@@ -48,7 +46,7 @@ class Home extends Component {
   }
 
   getNumLinks = () => {
-    axios.post('https://zipurl.me' + '/num_links', {
+    axios.post(apiUrl + '/api/num_links', {
       // no data to send
     }, {
       // send cancel token in case the component is unmounted
@@ -67,7 +65,7 @@ class Home extends Component {
   }
 
   getNumRedirects = () => {
-    axios.post('https://zipurl.me' + '/num_redirects', {
+    axios.post(apiUrl + '/api/num_redirects', {
       // no data to send
     }, {
       // send cancel token in case the component is unmounted

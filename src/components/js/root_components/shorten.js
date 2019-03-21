@@ -10,8 +10,7 @@ require('dotenv').config();
 
 // api and server variables
 const apiUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_URL : process.env.REACT_APP_LOCAL_URL;
-const server = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_SERVER : process.env.REACT_APP_LOCAL_SERVER;
-const url = ( server === "" ) ? String(apiUrl) : String(apiUrl) + String(server);
+const baseUrl = process.env.NODE_ENV === 'production' ? 'https://zipurl.me' : 'http://localhost';
 
 // shorten component
 class Shorten extends Component {
@@ -29,9 +28,9 @@ class Shorten extends Component {
   }
 
   shortenUrl = () => {
-    axios.post('https://zipurl.me' + '/shorten', {
+    axios.post(apiUrl + '/api/shorten', {
       	url: this.state.url,
-      	baseUrl: 'https://zipurl.me',
+      	baseUrl: baseUrl,
         userId: this.props.userId,
     }).then( res => {
         // get the short url from the request body

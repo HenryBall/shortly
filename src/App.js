@@ -15,7 +15,6 @@ import './App.css';
 
 // api and server variables
 const apiUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_URL : process.env.REACT_APP_LOCAL_URL;
-const server = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_SERVER : process.env.REACT_APP_LOCAL_SERVER;
 
 // entire app rendered as one component
 class App extends Component {
@@ -34,14 +33,13 @@ class App extends Component {
     }
 
     verifyToken(user) {
-        /*axios.post('https://zipurl.me' + '/verify_token', {
+        axios.post(apiUrl + '/api/verify_token', {
             token: user.token,
         }).then( res => {
             this.setState({isLoggedIn: true});
         }).catch( err => {
             console.log(err);
-        });*/
-        this.setState({isLoggedIn: true});
+        });
     }
 
     renderProps = (Component, props) => {

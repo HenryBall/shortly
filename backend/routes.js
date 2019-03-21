@@ -6,7 +6,6 @@ const sparkMD5 = require("spark-md5");
 const _ = require('underscore-node');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-var cors = require('cors');
 
 // helper files
 const auth = require('./auth');
@@ -19,13 +18,8 @@ const userModel = mongoose.model("user");
 
 module.exports = app => {
 
-  app.use(cors());
-
-  // api and server variables
-  const apiUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_URL : process.env.REACT_APP_LOCAL_URL;
-  const server = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_SERVER : process.env.REACT_APP_LOCAL_SERVER;
-
-  app.get("/redirect/:code", async (req, res) => {
+  app.get("/api/redirect/:code", async (req, res) => {
+    console.log("in redirect");
     // get url code from the request
     const urlCode = req.params.code;
     // look for the code in the db
@@ -43,7 +37,7 @@ module.exports = app => {
 
 
 
-  app.post("/shorten", async (req, res) => {
+  app.post("/api/shorten", async (req, res) => {
     const { url, baseUrl, userId } = req.body;
     // if base url is invalid return
     if (!validUrl.isUri(baseUrl)) {
@@ -91,7 +85,7 @@ module.exports = app => {
 
 
 
-  app.post("/sign_up", async (req, res, next) => {
+  app.post("/api/sign_up", async (req, res, next) => {
     const user = req.body;
     // TODO: perfrom second validation here
     // TODO: handle duplicate key exception
@@ -103,7 +97,7 @@ module.exports = app => {
 
 
 
-  app.post("/login", async (req, res, next) => {
+  app.post("/api/login", async (req, res, next) => {
     const user = req.body;
     // TODO: perfrom second validation here
 
@@ -125,7 +119,8 @@ module.exports = app => {
 
 
   // token verification function
-  app.post("/verify_token", async (req, res, next) => {
+  app.post("/api/verify_token", async (req, res, next) => {
+    console.log("in verify token");
     const authorizedData = verifyToken(req.body.token);
     if (authorizedData != false) {
       return res.status(200).json(authorizedData);
@@ -136,7 +131,7 @@ module.exports = app => {
 
 
 
-  app.post("/num_redirects", async (req, res) => {
+  app.post("/api/num_redirects", async (req, res) => {
     // get url code from the request
     urlModel.find({}, function(err, results){
       if (err) {
@@ -150,7 +145,7 @@ module.exports = app => {
 
 
 
-  app.post("/num_links", async (req, res) => {
+  app.post("/api/num_links", async (req, res) => {
     // get url code from the request
     urlModel.countDocuments({}, function(err, count){
       if (err) {
@@ -167,7 +162,7 @@ module.exports = app => {
 
 
 
-  app.post("/user_links", async (req, res) => {
+  app.post("/api/user_links", async (req, res) => {
     const { userId } = req.body;
     // get url code from the request
     const user = await userModel.findOne({ _id: userId });
@@ -186,7 +181,7 @@ module.exports = app => {
 
 
 
-  app.post("/delete_user_link", async (req, res) => {
+  app.post("/api/delete_user_link", async (req, res) => {
     const { userId, linkId } = req.body;
     // get url code from the request
     await userModel.findOne({ _id: userId }, async function (err, doc) {
