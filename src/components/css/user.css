@@ -1,8 +1,7 @@
 .top {
 	width: 100%;
 	height: 600px;
-	background: linear-gradient(rgba(24, 32, 97, 1), rgba(24, 32, 97, 1)); /*, 
-	url(../assets/background.jpg); */
+	background: linear-gradient(rgba(24, 32, 97, 1), rgba(24, 32, 97, 1));
   	background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -46,6 +45,13 @@
 	}
 	.third {
 		width: 100%;
+	}
+	.top {
+		height: 400px;
+	}
+	.bottom-fixed {
+		position: absolute; top: 400; left: 400;
+		width: 100%; height: calc(100% - 400px);
 	}
 }
 

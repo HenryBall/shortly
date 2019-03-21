@@ -38,6 +38,8 @@
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #b4b4b4;
   opacity: 1; /* Firefox */
+  font-family: 'Lato', sans-serif;
+  font-weight: lighter;
 }
 
 #shorten-btn {
