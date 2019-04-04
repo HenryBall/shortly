@@ -13,7 +13,7 @@ class Footer extends Component {
 			<div className='content'>
 				<div id='squeeze'>
 					<div id='title' className='squeeze-more dark-grey-color'>GET MORE OUT OF YOUR LINKS</div>
-					<div id='sub-text' className='squeeze-more light-grey-color'>Links are what dive the flow of information on the internet. Make sure yours are as efficient as possible with ZIP. Get started for free today!</div>
+					<div id='sub-text' className='squeeze-more light-grey-color'>Links are what drive the flow of information on the internet. Make sure yours are as efficient as possible with ZIP. Get started today!</div>
       				<Link to='/sign_up' id="footer-btn" className='react-link white-color dark-blue-color-back'>
                                     <div id='footer-btn-text'>GET STARTED</div>
                               </Link>

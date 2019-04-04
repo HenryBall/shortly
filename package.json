@@ -51,6 +51,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "proxy": "http://host:5000"
+  "license": "ISC"
 }

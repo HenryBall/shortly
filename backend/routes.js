@@ -280,6 +280,5 @@ module.exports = app => {
     return urlCode;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
   }
 
-  
 
 };
