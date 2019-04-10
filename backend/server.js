@@ -47,10 +47,10 @@ app.use(express.static(path.join(__dirname, "../build")))
 app.use(session({ secret: 'secret', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 
 // import routs and data model
-const Data = require("./data");
-require("./routes")(app);
+require("./data");
 require('./passport');
-require('./auth');
+require("./urlRoutes")(app);
+require('./authRoutes')(app);
 
 // launch backend into a port
 const API_PORT = process.env.PORT || 5000;

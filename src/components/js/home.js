@@ -87,8 +87,8 @@ class Home extends Component {
 		return (
 			<div>
 				<div className='top'>
-          <Nav isLoggedIn={this.props.isLoggedIn}/>
-          <Shorten updateLinks={this.getNumLinks} userId={null}/>
+          <Nav isLoggedIn={false}/>
+          <Shorten updateLinks={this.getNumLinks} userId={null} throwWarning={this.props.throwWarning}/>
         </div>
         <div className='bottom'>
           <Footer numLinks={this.state.numLinks} numRedirects={this.state.numRedirects}/>

@@ -16,7 +16,6 @@ const urlSchema = new Schema({
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
-    unique: true,
     required: true,
   },
   email: {
@@ -55,9 +54,7 @@ userSchema.methods.generateJWT = function() {
   return jwt.sign({
     email: this.email,
     id: this._id,
-    //exp: parseInt(expirationDate.getTime() / 1000, 10),
-    exp: Math.floor(Date.now() / 1000) + (60 * 60),
-  }, 'secret');
+  }, 'secret', { expiresIn: '7d' });
 };
 
 userSchema.methods.toAuthJSON = function() {

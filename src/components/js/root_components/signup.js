@@ -30,48 +30,20 @@ class SignUp extends Component {
     console.log("we're in " + process.env.NODE_ENV + " mode in the sign up component");
   }
 
-	validateEmail(email) {
-		// https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
-  	var re = /\S+@\S+\.\S+/;
-  	return re.test(email);
-	}
-
   handleSignUp() {
-  	if (this.state.username === '') {
-  		// throw error
-  		console.log('invalid username')
-  	} else {
-  		if (this.validateEmail(this.state.email)) {
-  			console.log('valid email')
-  			if (this.state.password === this.state.passwordd) {
-  				// good to go
-  				console.log('valid password')
-  				axios.post(apiUrl + '/api/sign_up', {
-      			username: this.state.username,
-      			email: this.state.email,
-      			password: this.state.password,
-            links: [],
-    			}).then( res => {
-            const user = res.data.user;
-            if (user) {
-              localStorage.setItem('curUser', JSON.stringify(res.data.user));
-              this.props.handleLogin();
-            } else {
-              console.log('unable to log in');
-            }
-    			})
-    			.catch( err => {
-      			console.log(err);
-    			});
-  			} else {
-  				// throw error
-  				console.log('invalid password')
-  			}
-  		} else {
-  			// throw error
-  			console.log('invalid email')
-  		}
-  	}
+  	axios.post(apiUrl + '/api/sign_up', {
+      username: this.state.username,
+      email: this.state.email,
+      password: this.state.password,
+      passwordd: this.state.passwordd,
+      links: [],
+    }).then( res => {
+      const user = res.data.user;
+      localStorage.setItem('curUser', JSON.stringify(user));
+      this.props.handleLogin();
+    }).catch( err => {
+      this.props.throwWarning(err.response.data);
+    });
   }
 
   handleInputChange(event) {

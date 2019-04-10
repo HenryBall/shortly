@@ -31,16 +31,17 @@ class Shorten extends Component {
     axios.post(apiUrl + '/api/shorten', {
       	url: this.state.url,
       	baseUrl: baseUrl,
+        // if the user is not logged in the id will be null
         userId: this.props.userId,
     }).then( res => {
         // get the short url from the request body
       	const shortUrl = String(res.data.shortUrl);
         // set new url state to update UI with short url
       	this.setState({url: shortUrl});
-        // get new num of links if in home.js or new num or user links if in user.js 
+        // get new num links if in home.js or user links if in user.js 
         this.props.updateLinks();
     }).catch( err => {
-      	console.log(err);
+      	this.props.throwWarning(err.response.data);
     });
   }
 

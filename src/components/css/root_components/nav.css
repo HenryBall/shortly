@@ -1,4 +1,4 @@
-#nav {
+.nav {
 	height: 75px;
 	width: 100%;
 	display: flex;
@@ -29,12 +29,16 @@
 }
 
 .nav-btn {
-	color: white;
 	background-color: transparent;
 	font-size: 15px;
 	font-family: 'Lato', sans-serif;
 	border: none;
 	cursor: pointer;
+}
+
+.btn-hover:hover {
+	border-bottom: 1px solid #182061;
+	transition: all 0.3s ease-in-out;
 }
 
 #login-btn {

@@ -1,12 +1,8 @@
 .top {
 	width: 100%;
 	height: 600px;
-	background: linear-gradient(rgba(24, 32, 97, 1), rgba(24, 32, 97, 1)); /*, 
-	url(../assets/background.jpg); */
-  	background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
     display: flex;
+    align-content: center;
     flex-direction: column;
 }
 

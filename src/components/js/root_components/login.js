@@ -34,15 +34,11 @@ class Login extends Component {
       password: this.state.password,
     }).then( res => {
       const user = res.data.user;
-      if (user) {
-        localStorage.setItem('curUser', JSON.stringify(res.data.user));
-        this.props.handleLogin();
-      } else {
-        console.log('unable to log in');
-      }
+      localStorage.setItem('curUser', JSON.stringify(user));
+      this.props.handleLogin();
     })
     .catch( err => {
-      	console.log(err);
+      	this.props.throwWarning(err.response.data);
     });
   }
 

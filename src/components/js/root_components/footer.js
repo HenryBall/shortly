@@ -13,7 +13,7 @@ class Footer extends Component {
 			<div className='content'>
 				<div id='squeeze'>
 					<div id='title' className='squeeze-more dark-grey-color'>GET MORE OUT OF YOUR LINKS</div>
-					<div id='sub-text' className='squeeze-more light-grey-color'>Links are what drive the flow of information on the internet. Make sure yours are as efficient as possible with ZIP. Get started today!</div>
+					<div id='sub-text' className='squeeze-more light-grey-color'>Links are what drive the flow of information on the internet. Whether you want to simplify the link to your band's facebook profile or are running a small buisness, make sure your URLs are as efficient as possible with ZIP. Get started today!</div>
       				<Link to='/sign_up' id="footer-btn" className='react-link white-color dark-blue-color-back'>
                                     <div id='footer-btn-text'>GET STARTED</div>
                               </Link>
@@ -32,7 +32,7 @@ class Footer extends Component {
                                                 <Odometer className='count' value={this.props.numRedirects} format="(.ddd),dd"/>
                                           </div>
                                           <div className='analytics-title-text'>TOTAL REDIRECTS</div>
-                                          <div className='analytics-sub-text light-grey-color'>Shorter links generate more clicks! Don't miss out on increased site traffic.</div>
+                                          <div className='analytics-sub-text light-grey-color'>Shorter links generate more interest! Streamline your online presence with ZIP.</div>
                                     </div>
       				</div>
       			</div>

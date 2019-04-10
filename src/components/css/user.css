@@ -1,17 +1,8 @@
-.top {
-	width: 100%;
-	height: 600px;
-	background: linear-gradient(rgba(24, 32, 97, 1), rgba(24, 32, 97, 1));
-  	background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-}
-
 .bottom-fixed {
 	position: absolute; top: 600; left: 600;
-	width: 100%; height: calc(100% - 600px);
+	width: 100%; 
+	min-height: calc(100% - 600px);
+	height: 600px;
 	display: flex;
 	flex-direction: row;
 }
@@ -25,8 +16,8 @@
 }
 
 .two-thirds {
-	padding-top: 50px;
-	padding-left: 50px;
+	padding-top: 25px;
+	padding-left: 40px;
  	width: 66%;
  	font-family: 'Lato', sans-serif;
  	font-weight: lighter;
@@ -35,24 +26,6 @@
 
 #date {
 	font-size: 12px;
-}
-
-@media screen and (max-width: 600px) {
-	.two-thirds {
-		visibility: hidden;
-		width: 0px;
-		padding: 0 0 0 0;
-	}
-	.third {
-		width: 100%;
-	}
-	.top {
-		height: 400px;
-	}
-	.bottom-fixed {
-		position: absolute; top: 400; left: 400;
-		width: 100%; height: calc(100% - 400px);
-	}
 }
 
 #main-link {
@@ -83,17 +56,33 @@
 	align-items: center;
 	cursor: pointer;
 	font-size: 12px;
-	transition: background-color linear .2s;
-	-webkit-backface-visibility: hidden;
+	transition: background-color 0s, border 0s, color 0s;
 }
 
 div.delete-btn-active:hover {
+	transition: background-color 0s, border 0s, color 0s;
 	background-color: #182061;
 	border: none;
 	color: white;
-	transition: background-color linear .2s;
 }
 
 .delete-btn-not-active {
 	visibility: hidden;
+}
+
+@media screen and (max-width: 600px) {
+	.two-thirds {
+		visibility: hidden;
+		width: 0px;
+		padding: 0 0 0 0;
+	}
+	.third {
+		width: 100%;
+	}
+	.bottom-fixed {
+		position: absolute; top: 600; left: 600;
+		width: 100%;
+		min-height: calc(100% - 600px);
+		height: 500px;
+	}
 }

@@ -52,28 +52,6 @@ class Home extends Component {
     this.setState({deleteActive: false});
   }
 
-  async setUserInfo(id, token) {
-    await this.setState({userId: id});
-    await this.setState({userToken: token});
-    this.getUserLinks();
-  }
-
-  getUserLinks = () => {
-    axios.post(apiUrl + '/api/user_links', {
-      // send the user's token in the request headers
-      headers: {
-        'authorization': this.state.userToken,
-        'Accept' : 'application/json',
-        'Content-Type': 'application/json'
-      },
-      userId: this.state.userId,
-    }).then( res => {
-        this.setState({listItems: res.data});
-    }).catch( err => {
-        console.log(err);
-    });
-  }
-
   setSelectedLink = (linkObj) => {
     const d =  new Date(linkObj.createdAt).toDateString();
     this.setState({linkId: linkObj._id});
@@ -84,21 +62,63 @@ class Home extends Component {
     this.setState({deleteActive: true});
   }
 
-  handleDelete() {
-    axios.post(apiUrl + '/api/delete_user_link', {
+  async setUserInfo(id, token) {
+    await this.setState({userId: id});
+    await this.setState({userToken: token});
+    this.getUserLinks();
+  }
+
+  getUserLinks = () => {
+    axios.post(apiUrl + '/api/get_user_links', {
+      // send the user id in the post data
+      userId: this.state.userId 
+    }, {
       // send the user's token in the request headers
       headers: {
         'authorization': this.state.userToken,
-        'Accept' : 'application/json',
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
-      },
+      }
+    }).then( res => {
+        this.setState({listItems: res.data});
+    }).catch( err => {
+      // catch error
+      if (err.response.status === 401) {
+        // if the user token is no longer valid, log them out
+        this.props.handleLogout();
+        this.props.throwWarning(err.response.data);
+      } else {
+        // otherwise throw generic warning
+        this.props.throwWarning(err.response.data);
+      }
+    });
+  }
+
+  handleDelete() {
+    axios.post(apiUrl + '/api/delete_user_link', {
+      // send the user id and link to delete in the post data
       userId: this.state.userId,
-      linkId: this.state.linkId,
+      linkId: this.state.linkId
+    }, {
+      // send the user's token in the request headers
+      headers: {
+        'authorization': this.state.userToken,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
     }).then( res => {
         this.setState({listItems: res.data});
         this.resetState();
     }).catch( err => {
-        console.log(err);
+      // catch error
+      if (err.response.status === 401) {
+        // if the user token is no longer valid, log them out
+        this.props.handleLogout();
+        this.props.throwWarning(err.response.data);
+      } else {
+        // otherwise throw generic warning
+        this.props.throwWarning(err.response.data);
+      }
     });
   }
 
@@ -106,8 +126,8 @@ class Home extends Component {
 		return (
       <div>
         <div className='top'>
-          <Nav isLoggedIn={this.props.isLoggedIn} handleLogout={this.props.handleLogout}/>
-				  <Shorten updateLinks={this.getUserLinks} userId={this.state.userId}/>
+          <Nav isLoggedIn={true} handleLogout={this.props.handleLogout}/>
+				  <Shorten updateLinks={this.getUserLinks} userId={this.state.userId} throwWarning={this.props.throwWarning}/>
         </div>
         <div className='bottom-fixed'>
           <div className='third'>

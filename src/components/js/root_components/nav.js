@@ -18,7 +18,7 @@ class Nav extends Component {
             links = (
                 <div id="links">
                    <button className='nav-btn'>
-                        <Link to='/' id='login-btn' className='react-link dark-blue-color'
+                        <Link to='/' id='login-btn' className='btn-hover react-link dark-blue-color'
                             onClick={() => this.handleLogout()}>
                             LOGOUT
                         </Link>
@@ -29,17 +29,17 @@ class Nav extends Component {
             links = (
                 <div id="links">
                    <button className='nav-btn'>
-                        <Link to='/login' id='login-btn' className='react-link dark-blue-color'>LOGIN</Link>
+                        <Link to='/login' id='login-btn' className='btn-hover react-link dark-blue-color'>LOGIN</Link>
                    </button>
                     <button className='nav-btn'>
-                        <Link to='/sign_up' className='react-link dark-blue-color'>SIGN UP</Link>
+                        <Link to='/sign_up' className='btn-hover react-link dark-blue-color'>SIGN UP</Link>
                     </button>
                 </div>
             )
         }
 
 		return (
-			<div id='nav'>
+			<div className='nav'>
             	<div id='logo' className='dark-blue-color'>ZIP</div>
                 {links}
     		</div>
