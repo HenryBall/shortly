@@ -38,7 +38,6 @@
 
 .btn-hover:hover {
 	border-bottom: 1px solid #182061;
-	transition: all 0.3s ease-in-out;
 }
 
 #login-btn {

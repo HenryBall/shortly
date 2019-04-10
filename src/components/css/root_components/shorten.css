@@ -36,6 +36,10 @@
 	font-family: 'Lato', sans-serif;
 }
 
+#shorten-input:focus {
+	border: 1px solid #f4b504;
+}
+
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #b4b4b4;
   opacity: 1; /* Firefox */

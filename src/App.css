@@ -10,6 +10,10 @@ button:hover {
  	filter: brightness(90%);
 }
 
+a {
+	text-decoration: none;
+}
+
 .react-link {
 	text-decoration: none;
 }

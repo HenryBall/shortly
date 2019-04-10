@@ -1,6 +1,7 @@
 // npm imports
 import React, { Component } from 'react';
 import axios from 'axios';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 // component imports
 import Nav from './root_components/nav';
@@ -26,10 +27,11 @@ class Home extends Component {
       userToken: '',
       linkId: '',
       listItems: [],
-      selectedLink: 'No link selected',
+      selectedLink: '',
       date: '',
       shortUrl: '',
       clicks: '',
+      copyActive: false,
       deleteActive: false,
     };
   }
@@ -46,9 +48,10 @@ class Home extends Component {
   resetState() {
     this.setState({linkId: ''});
     this.setState({date: ''});
-    this.setState({selectedLink: 'No link selected'});
+    this.setState({selectedLink: ''});
     this.setState({shortUrl: ''});
     this.setState({clicks: ''});
+    this.setState({copyActive: false});
     this.setState({deleteActive: false});
   }
 
@@ -59,6 +62,7 @@ class Home extends Component {
     this.setState({selectedLink: linkObj.url});
     this.setState({shortUrl: linkObj.shortUrl});
     this.setState({clicks: 'TOTAL CLICKS: ' + linkObj.clicks});
+    this.setState({copyActive: true});
     this.setState({deleteActive: true});
   }
 
@@ -66,6 +70,12 @@ class Home extends Component {
     await this.setState({userId: id});
     await this.setState({userToken: token});
     this.getUserLinks();
+  }
+
+  handleCopy() {
+    const copyText = this.state.shortUrl;
+    copyText.select();
+    document.execCommand('copy');
   }
 
   getUserLinks = () => {
@@ -81,6 +91,9 @@ class Home extends Component {
       }
     }).then( res => {
         this.setState({listItems: res.data});
+        if (res.data.length > 0) {
+          this.setSelectedLink(res.data[0]);
+        }
     }).catch( err => {
       // catch error
       if (err.response.status === 401) {
@@ -108,7 +121,11 @@ class Home extends Component {
       }
     }).then( res => {
         this.setState({listItems: res.data});
-        this.resetState();
+        if (res.data.length > 0) {
+          this.setSelectedLink(res.data[0]);
+        } else {
+          this.resetState();
+        }
     }).catch( err => {
       // catch error
       if (err.response.status === 401) {
@@ -135,8 +152,13 @@ class Home extends Component {
           </div>
           <div className='two-thirds'>
             <div className='light-grey-color' id='date'>{this.state.date}</div>
-            <div className='dark-grey-color' id='main-link'>{this.state.selectedLink}</div>
-            <div className='yellow-color' id='short-url'>{this.state.shortUrl}</div>
+            <div id='main-link'><a className='dark-grey-color linky' href={this.state.selectedLink}>{this.state.selectedLink}</a></div>
+            <div className='one-line'>
+              <div className='yellow-color' id='short-url'>{this.state.shortUrl}</div>
+                <CopyToClipboard text={this.state.shortUrl}>
+                  <div className={this.state.copyActive ? 'copy-btn-active': 'copy-btn-not-active'}>COPY</div>
+                </CopyToClipboard>
+            </div>
             <div className='light-grey-color' id='clicks'>{this.state.clicks}</div>
             <div
               className={this.state.deleteActive ? 'delete-btn-active': 'delete-btn-not-active'}

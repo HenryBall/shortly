@@ -16,7 +16,7 @@
 }
 
 .two-thirds {
-	padding-top: 25px;
+	padding-top: 40px;
 	padding-left: 40px;
  	width: 66%;
  	font-family: 'Lato', sans-serif;
@@ -26,28 +26,65 @@
 
 #date {
 	font-size: 12px;
+	margin-bottom: 5px;
 }
 
 #main-link {
-	margin-top: 5px;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	cursor: pointer;
+	margin-right: 40px;
+	max-width: 90%;
+	width: auto;
+	border-bottom: 1px solid white;
 }
 
-#short-url {
-	margin-top: 8px;
+.linky:hover {
+	color: #f4b504;
+}
+
+.one-line {
+	margin-top: 14px;
+	display: flex;
+	flex-direction: row;
+}
+
+.copy-btn-active {
+	width: 50px;
+	height: 20px;
+	color: #f4b504;
+	border: 1px solid #f4b504;
+	border-radius: 3px;
+	font-size: 12px;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: 15px;
+	transition: background-color 0.1s, border 0.1s, color 0.1s;
+}
+
+.copy-btn-active:hover {
+	transition: background-color 0.1s, border 0.1s, color 0.1s;
+	background-color: #f4b504;
+	border: 1px solid #f4b504;
+	color: white;
+}
+
+.copy-btn-not-active {
+	visibility: hidden;
 }
 
 #clicks {
-	margin-top: 8px;
+	margin-top: 15px;
 	font-size: 12px;
 }
 
 .delete-btn-active {
 	width: 80px;
 	height: 30px;
-	margin-top: 10px;
+	margin-top: 15px;
 	border: 1px solid #182061;
 	color: #182061;
 	border-radius: 3px;
@@ -56,13 +93,13 @@
 	align-items: center;
 	cursor: pointer;
 	font-size: 12px;
-	transition: background-color 0s, border 0s, color 0s;
+	transition: background-color 0.1s, border 0.1s, color 0.1s;
 }
 
 div.delete-btn-active:hover {
-	transition: background-color 0s, border 0s, color 0s;
+	transition: background-color 0.1s, border 0.1s, color 0.1s;
 	background-color: #182061;
-	border: none;
+	border: 1px solid #182061;
 	color: white;
 }
 
