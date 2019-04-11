@@ -1,7 +1,7 @@
 // npm imports
 import React, { Component } from 'react';
 import axios from 'axios';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 // component imports
 import Nav from './root_components/nav';
@@ -70,12 +70,6 @@ class Home extends Component {
     await this.setState({userId: id});
     await this.setState({userToken: token});
     this.getUserLinks();
-  }
-
-  handleCopy() {
-    const copyText = this.state.shortUrl;
-    copyText.select();
-    document.execCommand('copy');
   }
 
   getUserLinks = () => {

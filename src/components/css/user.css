@@ -8,7 +8,7 @@
 }
 
 .third {
-	background-color: #fcfcfc;
+	background-color: #f9f9f9;
  	width: 33%;
  	height: 100%;
  	overflow: hidden;
@@ -40,8 +40,12 @@
 	border-bottom: 1px solid white;
 }
 
+.selected-link {
+	background-color: white;
+}
+
 .linky:hover {
-	color: #f4b504;
+	color: #7c7c7c;
 }
 
 .one-line {

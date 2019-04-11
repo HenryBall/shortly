@@ -12,7 +12,23 @@ require('dotenv').config();
 
 class List extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      selectedIndex: 0,
+    };
+  }
+
+  componentWillReceiveProps(props) {
+    // if we delete an element, such that our selected index is no longer valid
+    if (this.state.selectedIndex >= this.props.listItems.length) {
+      this.setState({selectedIndex: 0});
+    }
+  }
+
   handleClick(index, value) {
+    this.setState({selectedIndex: index['index']});
     this.props.setSelectedLink(value['value']);
   }
 
@@ -36,7 +52,7 @@ class List extends Component {
         </div>
         <ul>
           {this.props.listItems.map((value, index) => {
-            return <li key={index} onClick={() => this.handleClick({index}, {value})}>
+            return <li key={index} className={this.state.selectedIndex === index ? 'selected' : ''} onClick={() => this.handleClick({index}, {value})}>
               <div className='cell-content'>
                 <div className='light-grey-color date'>{this.beautifyDate(value.createdAt)}</div>
                 <div className='dark-grey-color url'>{value.url}</div>

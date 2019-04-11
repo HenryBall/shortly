@@ -16,6 +16,10 @@ li {
 	cursor: pointer;
 }
 
+.selected {
+	background-color: white;
+}
+
 .cell-content {
 	margin-left: 40px;
 	padding: 15px 0px 15px 0px;
