@@ -10,7 +10,7 @@ const userModel = mongoose.model("user");
 module.exports = app => {
 
   app.get("/login"), async (req, res, next) => {
-    
+    return res.redirect("https://zipurl.me/login");
   }
 
   app.post("/api/verify_token", async (req, res, next) => {
