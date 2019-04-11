@@ -17,13 +17,15 @@ class List extends Component {
 
     this.state = {
       selectedIndex: 0,
+      listLength: 0,
+      dropDownActive: false,
     };
   }
 
   componentWillReceiveProps(props) {
-    // if we delete an element, such that our selected index is no longer valid
-    if (this.state.selectedIndex >= this.props.listItems.length) {
+    if (this.state.listLength !== this.props.listItems.length) {
       this.setState({selectedIndex: 0});
+      this.setState({listLength: this.props.listItems.length});
     }
   }
 
@@ -44,11 +46,25 @@ class List extends Component {
     return String(d.getMonth()) + ' / ' + String(d.getDate());
   }
 
+  handleDropdownSelection(selection) {
+    this.setState({selectedIndex: 0});
+    this.setState({dropDownActive: false});
+    this.props.sortBySelection(selection);
+  }
+
 	render() {
 		return (
-      <div>
+      <div className='whole-list'>
         <div id='list-title-container'>
           <div id='list-title' className='light-grey-color'>{this.props.listItems.length} {this.pluralize(this.props.listItems.length)}</div>
+          <div className='sort-by' onClick={() => this.setState({dropDownActive: !this.state.dropDownActive})}>
+            <div className='sort-by-img'></div>
+            <div className='light-grey-color'>SORT BY</div>
+          </div>
+        </div>
+        <div className={this.state.dropDownActive ? 'drop-down-active' : 'hide'}>
+          <div className='drop-down-item light-grey-color' onClick={() => this.handleDropdownSelection('date')}>Most recent</div>
+          <div className='drop-down-item light-grey-color' onClick={() => this.handleDropdownSelection('clicks')}>Most clicks</div>
         </div>
         <ul>
           {this.props.listItems.map((value, index) => {

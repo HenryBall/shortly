@@ -33,6 +33,7 @@ class Home extends Component {
       clicks: '',
       copyActive: false,
       deleteActive: false,
+      sortBy: 'date',
     };
   }
 
@@ -55,7 +56,7 @@ class Home extends Component {
     this.setState({deleteActive: false});
   }
 
-  setSelectedLink = (linkObj) => {
+  setSelectedLink = (linkObj, index) => {
     const d =  new Date(linkObj.createdAt).toDateString();
     this.setState({linkId: linkObj._id});
     this.setState({date: 'CREATED ON: ' + d});
@@ -72,6 +73,27 @@ class Home extends Component {
     this.getUserLinks();
   }
 
+  sortBySelection(selection) {
+    this.setState({sortBy: selection});
+    if (this.state.listItems.length > 0) {
+      const sorted = this.sortList(this.state.listItems, selection);
+      this.setState({listItems: sorted});
+      this.setSelectedLink(this.state.listItems[0]);
+    }
+  }
+
+  sortList(list, selection) {
+    var sorted = [];
+    if (selection === 'clicks') {
+      sorted = list.sort((a, b) => (a.clicks < b.clicks) ? 1 : -1)
+    } else if (selection === 'date') {
+      sorted = list.sort((a, b) => (a.createdAt < b.createdAt) ? 1 : -1)
+    } else {
+      sorted = list.sort((a, b) => (a.createdAt < b.createdAt) ? 1 : -1)
+    }
+    return sorted;
+  }
+
   getUserLinks = () => {
     axios.post(apiUrl + '/api/get_user_links', {
       // send the user id in the post data
@@ -83,10 +105,11 @@ class Home extends Component {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
-    }).then( res => {
-        this.setState({listItems: res.data});
+    }).then( res => { 
         if (res.data.length > 0) {
-          this.setSelectedLink(res.data[0]);
+          const sorted = this.sortList(res.data, this.state.sortBy);
+          this.setState({listItems: sorted});
+          this.setSelectedLink(this.state.listItems[0]);
         }
     }).catch( err => {
       // catch error
@@ -142,7 +165,7 @@ class Home extends Component {
         </div>
         <div className='bottom-fixed'>
           <div className='third'>
-            <List listItems={this.state.listItems} setSelectedLink={this.setSelectedLink}/>
+            <List listItems={this.state.listItems} setSelectedLink={this.setSelectedLink} sortBySelection={this.sortBySelection.bind(this)}/>
           </div>
           <div className='two-thirds'>
             <div className='light-grey-color' id='date'>{this.state.date}</div>

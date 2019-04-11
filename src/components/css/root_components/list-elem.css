@@ -16,6 +16,12 @@ li {
 	cursor: pointer;
 }
 
+.whole-list {
+	z-index: 0;
+	display: flex;
+	flex-direction: column;
+}
+
 .selected {
 	background-color: white;
 }
@@ -44,12 +50,64 @@ li {
 	font-family: 'Lato', sans-serif;
 	font-weight: lighter;
 	font-size: 15px;
-	color: #303030;
 	width: 100%;
 	height: 50px;
 	border-bottom: 2px solid #f2f2f2;
 	display: flex;
+	flex-direction: row;
 	align-items: center;
+	justify-content: space-between;
+}
+
+.sort-by {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	margin-right: 40px;
+	cursor: pointer;
+}
+
+.sort-by-img {
+	width: 25px;
+	height: 16px;
+	background-repeat: no-repeat;
+    background-size: cover;
+	background-image: url("../../assets/sortBy2px.png");
+	margin-right: 10px;
+}
+
+.drop-down-active {
+	position: absolute;
+	top: 52px;
+	z-index: 10;
+	align-self: flex-end;
+	width: 150px;
+	height: auto;
+	background-color: white;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.hide {
+	visibility: hidden;
+	height: 0px;
+}
+
+.drop-down-item {
+	font-family: 'Lato', sans-serif;
+	font-weight: lighter;
+	font-size: 15px;
+	width: 135px;
+	height: 50px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding-left: 15px;
+}
+
+.drop-down-item:hover {
+	background-color: #f9f9f9;
+	cursor: pointer;
 }
 
 #list-title {

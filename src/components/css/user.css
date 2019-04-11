@@ -44,8 +44,12 @@
 	background-color: white;
 }
 
+.linky {
+	font-weight: lighter;
+}
+
 .linky:hover {
-	color: #7c7c7c;
+	text-decoration: underline;
 }
 
 .one-line {
@@ -111,7 +115,7 @@ div.delete-btn-active:hover {
 	visibility: hidden;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
 	.two-thirds {
 		visibility: hidden;
 		width: 0px;
