@@ -9,19 +9,23 @@ const userModel = mongoose.model("user");
 
 module.exports = app => {
 
-  	app.post("/api/verify_token", async (req, res, next) => {
-  		// get the token from the request headers
-    	const token = getTokenFromHeaders(req);
-    	// check if the token in still valid
-    	const authorized = verifyToken(token);
-    	if (authorized) {
-    		// if it is return OK
-      		return res.status(200).json("Web token valid!");
-    	} else {
-    		// if it's not return unauthorized
-      		return res.status(401).json("Please log in!");
-    	}
-  	});
+  app.get("/login"), async (req, res, next) => {
+    
+  }
+
+  app.post("/api/verify_token", async (req, res, next) => {
+  	// get the token from the request headers
+    const token = getTokenFromHeaders(req);
+    // check if the token in still valid
+    const authorized = verifyToken(token);
+    if (authorized) {
+    	// if it is return OK
+      	return res.status(200).json("Web token valid!");
+    } else {
+    	// if it's not return unauthorized
+      	return res.status(401).json("Please log in!");
+    }
+  });
 
 	app.post("/api/sign_up", async (req, res, next) => {
 		// get user from request
