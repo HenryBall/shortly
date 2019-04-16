@@ -41,7 +41,7 @@ class List extends Component {
     return 'LINKS'
   }
 
-  beautifyDate(date) {
+  cleanUpDate(date) {
     const d =  new Date(date)
     return String(d.getMonth()) + ' / ' + String(d.getDate());
   }
@@ -70,7 +70,7 @@ class List extends Component {
           {this.props.listItems.map((value, index) => {
             return <li key={index} className={this.state.selectedIndex === index ? 'selected' : ''} onClick={() => this.handleClick({index}, {value})}>
               <div className='cell-content'>
-                <div className='light-grey-color date'>{this.beautifyDate(value.createdAt)}</div>
+                <div className='light-grey-color date'>{this.cleanUpDate(value.createdAt)}</div>
                 <div className='dark-grey-color url'>{value.url}</div>
                 <div className='yellow-color shortUrl'>{value.shortUrl}</div>
               </div>
