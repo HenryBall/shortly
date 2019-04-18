@@ -39,15 +39,16 @@ class Shorten extends Component {
         // set new url state to update UI with short url
       	this.setState({url: shortUrl});
         // get new num links if in home.js or user links if in user.js 
-        this.props.updateLinks();
+        this.props.updateLinks(res.data);
     }).catch( err => {
+      console.log(err);
       	this.props.throwWarning(err.response.data);
     });
   }
 
 	render() {
 		return (
-			<div className='shorten'>
+			<div className='shorten dark-blue-color-back'>
     			<div id='tag-line'>Shorten, Simplify, <span className='yellow-color'>Streamline</span>.</div>
     			<div id='inputContainer'>
         			<input

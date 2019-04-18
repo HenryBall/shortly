@@ -13,7 +13,7 @@ const urlSchema = new Schema({
   clicks: Number,
 });
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
   username: {
     type: String,
     required: true,
@@ -34,6 +34,15 @@ const userSchema = new mongoose.Schema({
   links: {
     type: Array,
   }
+});
+
+const timeStampSchema = new Schema({
+  urlId: Schema.Types.ObjectId,
+  day: {
+    type: Date,
+    index: true,
+  },
+  clicks: Number,
 });
 
 userSchema.methods.setPassword = function(password) {
@@ -67,3 +76,4 @@ userSchema.methods.toAuthJSON = function() {
 
 mongoose.model("user", userSchema);
 mongoose.model("url", urlSchema);
+mongoose.model("timeStamp", timeStampSchema);

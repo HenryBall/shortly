@@ -16,8 +16,7 @@
 }
 
 .two-thirds {
-	padding-top: 40px;
-	padding-left: 40px;
+	padding: 40px 40px 40px 40px;
  	width: 66%;
  	font-family: 'Lato', sans-serif;
  	font-weight: lighter;
@@ -49,7 +48,7 @@
 }
 
 .linky:hover {
-	text-decoration: underline;
+	color: #f4b504;
 }
 
 .one-line {
@@ -113,6 +112,87 @@ div.delete-btn-active:hover {
 
 .delete-btn-not-active {
 	visibility: hidden;
+}
+
+.whole-list {
+	display: flex;
+	flex-direction: column;
+}
+
+.sort-by {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	margin-right: 40px;
+	cursor: pointer;
+}
+
+.sort-by-img {
+	width: 25px;
+	height: 16px;
+	background-repeat: no-repeat;
+    background-size: cover;
+	background-image: url("../assets/sortBy2px.png");
+	margin-right: 10px;
+}
+
+.hide {
+	visibility: hidden;
+	height: 0px;
+}
+
+.drop-down-item {
+	font-family: 'Lato', sans-serif;
+	font-weight: lighter;
+	font-size: 15px;
+	width: 135px;
+	height: 50px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding-left: 15px;
+}
+
+
+#list-title-container {
+	font-family: 'Lato', sans-serif;
+	font-weight: lighter;
+	font-size: 15px;
+	width: 100%;
+	height: 50px;
+	border-bottom: 2px solid #f2f2f2;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.drop-down-active {
+	position: absolute;
+	top: 52px;
+	z-index: 10;
+	align-self: flex-end;
+	width: 150px;
+	height: auto;
+	background-color: white;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.drop-down-item:hover {
+	background-color: #f9f9f9;
+	cursor: pointer;
+}
+
+#list-title {
+	margin-left: 40px;
+}
+
+canvas {
+	position: relative; 
+	max-width: 800px;
+	max-height: 400px;
+	color: blue;
 }
 
 @media screen and (max-width: 800px) {
