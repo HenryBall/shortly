@@ -190,8 +190,8 @@ div.delete-btn-active:hover {
 
 canvas {
 	position: relative; 
-	max-width: 800px;
-	max-height: 400px;
+	width: 100%;
+	height: auto;
 	color: blue;
 }
 

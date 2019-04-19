@@ -10,6 +10,8 @@ require('dotenv').config();
 const apiUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_HOSTED_URL : process.env.REACT_APP_LOCAL_URL;
 
 const options = {
+    responsive: true,
+    maintainAspectRatio: false,
     animation: {
         duration: 2000
     },

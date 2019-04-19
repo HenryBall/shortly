@@ -127,7 +127,7 @@ module.exports = app => {
     console.log(labels);
     var possibleDates = calculateDateObjs(startDate, endDate);
     console.log(possibleDates);
-    var data = [0, 0, 0, 0, 0, 0, 0];
+    var data = [];
     console.log(startDate);
     // get url code from the request
     timeStampModel.find( { urlId: urlId, day: { "$gte": startDate, "$lte": endDate }},  function(err, doc){
@@ -137,6 +137,8 @@ module.exports = app => {
         for (j = 0; j < possibleDates.length; j++) {
           if (doc[i].day.getDate() === possibleDates[j].getDate()) {
             data[j] = doc[i].clicks;
+          } else {
+            data[j] = 0;
           }
         }
       }
@@ -147,7 +149,7 @@ module.exports = app => {
   function calculateDateLabels(startDate, endDate) {
     var labels = [];
     var curDate = startDate;
-    for (i = 0; i < 7; i++) {
+    for (i = 0; i < 15; i++) {
       labels[i] = (curDate.getMonth() + 1) + '/' + curDate.getDate();
       curDate = incrementDate(curDate);
     }
@@ -157,7 +159,7 @@ module.exports = app => {
   function calculateDateObjs(startDate, endDate) {
     var labels = [];
     var curDate = startDate;
-    for (i = 0; i < 7; i++) {
+    for (i = 0; i < 15; i++) {
       labels[i] = curDate;
       curDate = incrementDate(curDate);
     }
@@ -236,7 +238,7 @@ module.exports = app => {
     const parts = rawEndDate.match(/(\d+)/g);
     const endDate = new Date(parts[0], parts[1]-1, parts[2]);
     const endTime = endDate.getTime();
-    const startTime = endTime - (6 * 24 * 60 * 60 * 1000);
+    const startTime = endTime - (14 * 24 * 60 * 60 * 1000);
     const startDate = new Date(startTime);
     const day = new Date( startDate.getFullYear(),
       startDate.getMonth(),
